@@ -1,0 +1,15 @@
+@use 'index';
+
+.features {
+    display: flex;
+    flex-direction: row;
+}
+
+
+@media (max-width: 920px) {
+
+    .features {
+        flex-direction: column;
+    }
+
+}

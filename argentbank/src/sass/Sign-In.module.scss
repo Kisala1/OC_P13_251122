@@ -1,0 +1,15 @@
+@use 'index';
+
+.signInContent {
+    box-sizing: border-box;
+    background-color: white;
+    width: 300px;
+    height: fit-content;
+    margin: 0 auto;
+    margin-top: 3rem;
+    padding: 2rem;
+
+    .signInIcon {
+        font-size: 5rem;
+    }
+}

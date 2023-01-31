@@ -1,0 +1,49 @@
+@use '../../sass/themes';
+@use '../../sass/index';
+
+
+.mainNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+
+
+    .mainNavLogo {
+        display: flex;
+        align-items: center;
+
+        .mainNavLogoImage {
+            max-width: 100%;
+            width: 200px;
+        }
+    }
+
+    .mainNavItem {
+        text-decoration: none;
+        margin-right: 0.5rem;
+        border: none;
+        font-weight: bold;
+        color: themes.$primary-color;
+
+        &:active {
+            color: #42b983;
+            text-decoration: none;
+            border: none;
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        .icon {
+            margin-right: 0.4rem;
+        }
+    }
+
+    .logInNavItem {
+        display: flex;
+        gap: 10px;
+    }
+
+}
