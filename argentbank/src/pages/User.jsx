@@ -4,6 +4,8 @@ import styles from '../sass/User.module.scss';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { displayName } from '../feature/nameReducer';
 
 const MainBackground = styled.div`
   background-color: #12002b;
@@ -12,6 +14,11 @@ const MainBackground = styled.div`
 export function User() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const dispatch = useDispatch();
+  const name = useSelector(
+    (state) => state.user.firstName + ' ' + state.user.lastName + '!'
+  );
+
   useEffect(() => {
     if (!token) {
       navigate('/signIn');
@@ -23,7 +30,9 @@ export function User() {
     headers: new Headers({ Authorization: `Bearer ${token}` }),
   })
     .then((res) => res.json())
-    .then((result) => console.log(result));
+    .then((result) =>
+      dispatch(displayName([result.body.firstName, result.body.lastName]))
+    );
 
   const [isOpen, setOpen] = useState(false);
 
@@ -36,7 +45,7 @@ export function User() {
             Welcome back
             <br />
             {/* TODO  firstName + lastName des données qui remplace Tony Jarvis*/}
-            Tony Jarvis!
+            {name}
           </h1>
           <button
             className={styles.buttonEdit}
