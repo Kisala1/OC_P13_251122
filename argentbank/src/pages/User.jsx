@@ -18,6 +18,8 @@ export function User() {
   const name = useSelector(
     (state) => state.user.firstName + ' ' + state.user.lastName + '!'
   );
+  const firstName = useSelector((state) => state.user.firstName);
+  const lastName = useSelector((state) => state.user.lastName);
 
   useEffect(() => {
     if (!token) {
@@ -37,35 +39,26 @@ export function User() {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    // TODO nameUser = name des données
-    <MainLayout loggedIn={true}>
+    <MainLayout loggedIn={true} firstName={firstName}>
       <MainBackground>
         <div className={styles.header}>
-          <h1>
-            Welcome back
-            <br />
-            {/* TODO  firstName + lastName des données qui remplace Tony Jarvis*/}
-            {name}
-          </h1>
-          <button
-            className={styles.buttonEdit}
-            onClick={() => {
-              setOpen(!isOpen);
-            }}
-          >
-            Edit Name
-          </button>
           {isOpen ? (
             <div className={styles.containerEdit}>
               <h1>Welcome back</h1>
               <div className={styles.containerInput}>
-                {/* TODO value = nom / prénom précédemment enregistrés */}
-                <input type="text" className={styles.input} />
-                <input type="text" className={styles.input} />
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder={firstName}
+                />
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder={lastName}
+                />
               </div>
               <div className={styles.containerButtons}>
                 {/* TODO Save => met à jour les données */}
-                {/* TODO Cancel => Ne change pas les données */}
                 <button className={styles.button}>Save</button>
                 <button
                   className={styles.button}
@@ -78,7 +71,21 @@ export function User() {
               </div>
             </div>
           ) : (
-            <div></div>
+            <>
+              <h1>
+                Welcome back
+                <br />
+                {name}
+              </h1>
+              <button
+                className={styles.buttonEdit}
+                onClick={() => {
+                  setOpen(!isOpen);
+                }}
+              >
+                Edit Name
+              </button>
+            </>
           )}
         </div>
         <h2 className={styles.srOnly}>Accounts</h2>

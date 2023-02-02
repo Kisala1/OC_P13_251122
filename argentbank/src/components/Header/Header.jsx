@@ -6,21 +6,8 @@ import {
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './Header.module.scss';
-import { displayFirstName } from '../../feature/nameReducer';
-import { useDispatch, useSelector } from 'react-redux';
 
-// TODO add name venant de l'api envoyé depuis MainLayout.jsx
-export function Header({ loggedIn }) {
-  const token = localStorage.getItem('token');
-  const dispatch = useDispatch();
-  const firstName = useSelector((state) => state.user.firstName);
-  fetch('http://localhost:3001/api/v1/user/profile', {
-    method: 'POST',
-    headers: new Headers({ Authorization: `Bearer ${token}` }),
-  })
-    .then((res) => res.json())
-    .then((result) => dispatch(displayFirstName(result.body.firstName)));
-
+export function Header({ loggedIn, firstName }) {
   return (
     <div className={styles.mainNav}>
       {loggedIn ? (
@@ -35,7 +22,6 @@ export function Header({ loggedIn }) {
           <div className={styles.logInNavItem}>
             <Link className={styles.mainNavItem} to={'/User'}>
               <FontAwesomeIcon icon={faUserCircle} className={styles.icon} />
-              {/* TODO {name} qui remplace Tony*/}
               {firstName}
             </Link>
             <Link className={styles.mainNavItem} to={'/'}>

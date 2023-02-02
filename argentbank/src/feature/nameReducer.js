@@ -11,12 +11,9 @@ const nameSlice = createSlice({
       state.firstName = payload[0];
       state.lastName = payload[1];
     },
-    displayFirstName: (state, { payload }) => {
-      state.firstName = payload;
-    },
   },
 });
 
-export const { displayName, displayFirstName } = nameSlice.actions;
+export const { displayName } = nameSlice.actions;
 
 export default nameSlice.reducer;
