@@ -19,6 +19,7 @@ export function InputsSignIn() {
   const handleSubmit = (event) => {
     //Prevent page reload
     event.preventDefault();
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const data = JSON.stringify({ email, password });
@@ -32,15 +33,8 @@ export function InputsSignIn() {
       .then((result) => {
         localStorage.setItem('token', result.body.token);
         setIsSubmitted(true);
-        console.log(localStorage.getItem('token'));
       })
-      .catch((err) => console.log(err));
-
-    if (data.email !== email || data.password !== password) {
-      setErrorMessages(error);
-    } else {
-      setIsSubmitted(true);
-    }
+      .catch(() => setErrorMessages(true));
   };
 
   // Generate JSX code for error message
