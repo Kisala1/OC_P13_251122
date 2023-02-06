@@ -32,6 +32,7 @@ export function InputsSignIn() {
       .then((res) => res.json())
       .then((result) => {
         localStorage.setItem('token', result.body.token);
+        console.log(localStorage.getItem('token'))
         setIsSubmitted(true);
       })
       .catch(() => setErrorMessages(true));

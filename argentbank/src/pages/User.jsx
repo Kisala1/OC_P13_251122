@@ -3,17 +3,19 @@ import { Button } from '../components/Buttons/Button';
 import styles from '../sass/User.module.scss';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { displayName } from '../feature/nameReducer';
+import { displayName, editName } from '../feature/nameReducer';
 
 const MainBackground = styled.div`
   background-color: #12002b;
   min-height: 85vh;
 `;
 export function User() {
+  const [isOpen, setOpen] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+
   const dispatch = useDispatch();
   const name = useSelector(
     (state) => state.user.firstName + ' ' + state.user.lastName + '!'
@@ -25,18 +27,32 @@ export function User() {
     if (!token) {
       navigate('/signIn');
     }
+    fetch('http://localhost:3001/api/v1/user/profile', {
+      method: 'POST',
+      headers: new Headers({ Authorization: `Bearer ${token}` }),
+    })
+      .then((res) => res.json())
+      .then((result) =>
+        dispatch(displayName([result.body.firstName, result.body.lastName]))
+      );
   }, []);
 
-  fetch('http://localhost:3001/api/v1/user/profile', {
-    method: 'POST',
-    headers: new Headers({ Authorization: `Bearer ${token}` }),
-  })
-    .then((res) => res.json())
-    .then((result) =>
-      dispatch(displayName([result.body.firstName, result.body.lastName]))
-    );
+  const inputFirstName = useRef();
+  const inputLastName = useRef();
 
-  const [isOpen, setOpen] = useState(false);
+  const handleEdit = () => {
+    setOpen(false);
+
+    const data = {
+      firstName: inputFirstName.current.value,
+      lastName: inputLastName.current.value,
+    };
+
+    fetch('http://localhost:3001/api/v1/user/profile', {
+      method: 'PUT',
+      headers: new Headers({ Authorization: `Bearer ${token}` }),
+    }).then(() => dispatch(editName([data.firstName, data.lastName])));
+  };
 
   return (
     <MainLayout loggedIn={true} firstName={firstName}>
@@ -47,19 +63,22 @@ export function User() {
               <h1>Welcome back</h1>
               <div className={styles.containerInput}>
                 <input
+                  ref={inputFirstName}
                   type="text"
                   className={styles.input}
                   placeholder={firstName}
                 />
                 <input
+                  ref={inputLastName}
                   type="text"
                   className={styles.input}
                   placeholder={lastName}
                 />
               </div>
               <div className={styles.containerButtons}>
-                {/* TODO Save => met à jour les données */}
-                <button className={styles.button}>Save</button>
+                <button className={styles.button} onClick={() => handleEdit()}>
+                  Save
+                </button>
                 <button
                   className={styles.button}
                   onClick={() => {
