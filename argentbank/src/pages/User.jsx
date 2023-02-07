@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { displayName, editName } from '../feature/nameReducer';
+import { setName, editName } from '../feature/nameReducer';
 
 const MainBackground = styled.div`
   background-color: #12002b;
@@ -13,35 +13,36 @@ const MainBackground = styled.div`
 `;
 export function User() {
   const [isOpen, setOpen] = useState(false);
-  const navigate = useNavigate();
   const token = localStorage.getItem('token');
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const name = useSelector(
-    (state) => state.user.firstName + ' ' + state.user.lastName + '!'
+    (state) => state.user.firstName + ' ' + state.user.lastName + ' !'
   );
   const firstName = useSelector((state) => state.user.firstName);
   const lastName = useSelector((state) => state.user.lastName);
 
   useEffect(() => {
+    /* Si pas le bon token, redirige vers /signIn */
     if (!token) {
       navigate('/signIn');
     }
-    fetch('http://localhost:3001/api/v1/user/profile', {
-      method: 'POST',
-      headers: new Headers({ Authorization: `Bearer ${token}` }),
-    })
-      .then((res) => res.json())
-      .then((result) =>
-        dispatch(displayName([result.body.firstName, result.body.lastName]))
-      );
   }, []);
+
+  fetch('http://localhost:3001/api/v1/user/profile', {
+    method: 'POST',
+    headers: new Headers({ Authorization: `Bearer ${token}` }),
+  })
+    .then((res) => res.json())
+    .then((result) =>
+      dispatch(setName([result.body.firstName, result.body.lastName]))
+    );
 
   const inputFirstName = useRef();
   const inputLastName = useRef();
 
   const handleEdit = () => {
-    setOpen(false);
+    setOpen(!isOpen);
 
     const data = {
       firstName: inputFirstName.current.value,
@@ -50,8 +51,15 @@ export function User() {
 
     fetch('http://localhost:3001/api/v1/user/profile', {
       method: 'PUT',
-      headers: new Headers({ Authorization: `Bearer ${token}` }),
-    }).then(() => dispatch(editName([data.firstName, data.lastName])));
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then(() => dispatch(editName([data.firstName, data.lastName])))
+      .catch((err) => console.log(err));
   };
 
   return (
