@@ -11,6 +11,10 @@ const MainBackground = styled.div`
   min-height: 85vh;
 `;
 
+/**
+ * @returns SignIn element
+ */
+
 export function SignIn() {
   
   return (

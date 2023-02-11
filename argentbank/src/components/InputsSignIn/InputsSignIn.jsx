@@ -4,7 +4,8 @@ import styles from './InputsSignIn.module.scss';
 
 /**
  *
- * @returns
+ * @returns form with input, input verification 
+ * and error message management
  */
 
 // source : https://contactmentor.com/login-form-react-js-code/

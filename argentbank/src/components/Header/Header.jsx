@@ -7,6 +7,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './Header.module.scss';
 
+/**
+ * 
+ * @param {boolean} param1 : becomes true after login, on User.jsx
+ * @param {string} param2 : data that comes from User.jsx
+ * 
+ * @returns div for mainLayout, the display depends 
+ * on the boolean 'loggedIn'.
+ */
+
 export function Header({ loggedIn, firstName }) {
   return (
     <div className={styles.mainNav}>

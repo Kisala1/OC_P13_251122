@@ -1,5 +1,10 @@
 import styles from './Footer.module.scss';
 
+/**
+ * 
+ * @returns div for mainLayout
+ */
+
 export function Footer() {
   return (
     <div className={styles.footer}>

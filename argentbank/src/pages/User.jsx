@@ -11,11 +11,20 @@ const MainBackground = styled.div`
   background-color: #12002b;
   min-height: 85vh;
 `;
+
+/**
+ * @returns User element
+ */
+
 export function User() {
-  const [isOpen, setOpen] = useState(false);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+
+  const [isOpen, setOpen] = useState(false);
+
   const dispatch = useDispatch();
+
+  /* All UseSelector */
   const name = useSelector(
     (state) => state.user.firstName + ' ' + state.user.lastName + ' !'
   );
@@ -23,12 +32,13 @@ export function User() {
   const lastName = useSelector((state) => state.user.lastName);
 
   useEffect(() => {
-    /* Si pas le bon token, redirige vers /signIn */
+    /* If not the right token, redirects to /signIn */
     if (!token) {
       navigate('/signIn');
     }
   }, []);
 
+  /* retrieves the data from the request and dispatches the data to setName */
   fetch('http://localhost:3001/api/v1/user/profile', {
     method: 'POST',
     headers: new Headers({ Authorization: `Bearer ${token}` }),
@@ -38,6 +48,7 @@ export function User() {
       dispatch(setName([result.body.firstName, result.body.lastName]))
     );
 
+  /* Hook useRef() : allows to keep the value between the renderings */
   const inputFirstName = useRef();
   const inputLastName = useRef();
 
@@ -45,10 +56,12 @@ export function User() {
     setOpen(!isOpen);
 
     const data = {
+      /* current is the element object returned by useRef() */
       firstName: inputFirstName.current.value,
       lastName: inputLastName.current.value,
     };
 
+    /* updates the data written in the inputs and dispatch the changes to editName */
     fetch('http://localhost:3001/api/v1/user/profile', {
       method: 'PUT',
       headers: {
@@ -71,12 +84,14 @@ export function User() {
               <h1>Welcome back</h1>
               <div className={styles.containerInput}>
                 <input
+                  /* ref allows access to this element in the DOM */
                   ref={inputFirstName}
                   type="text"
                   className={styles.input}
                   placeholder={firstName}
                 />
                 <input
+                  /* ref allows access to this element in the DOM */
                   ref={inputLastName}
                   type="text"
                   className={styles.input}

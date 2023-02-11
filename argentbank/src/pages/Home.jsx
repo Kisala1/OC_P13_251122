@@ -27,6 +27,10 @@ const src = [
   },
 ];
 
+/**
+ * @returns Home element
+ */
+
 export function Home() {
   return (
     <MainLayout>

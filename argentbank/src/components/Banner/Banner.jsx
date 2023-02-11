@@ -1,5 +1,10 @@
 import styles from './Banner.module.scss';
 
+/**
+ * 
+ * @returns div element, Banner, for the home page
+ */
+
 export function Banner() {
   return (
     <div className={styles.hero}>

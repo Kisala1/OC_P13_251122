@@ -1,5 +1,13 @@
 import styles from './FeatureItem.module.scss';
 
+/**
+ * 
+ * @param {string} param 1,2,3,4
+ * 
+ * @returns div containing the element structure 
+ * for the home page information
+ */
+
 export function FeatureItem({ img, alt, title, text }) {
   return (
     <div className={styles.featureItem}>
