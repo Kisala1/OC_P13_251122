@@ -36,17 +36,16 @@ export function User() {
     if (!token) {
       navigate('/signIn');
     }
+    /* retrieves the data from the request and dispatches the data to setName */
+    fetch('http://localhost:3001/api/v1/user/profile', {
+      method: 'POST',
+      headers: new Headers({ Authorization: `Bearer ${token}` }),
+    })
+      .then((res) => res.json())
+      .then((result) =>
+        dispatch(setName([result.body.firstName, result.body.lastName]))
+      );
   }, []);
-
-  /* retrieves the data from the request and dispatches the data to setName */
-  fetch('http://localhost:3001/api/v1/user/profile', {
-    method: 'POST',
-    headers: new Headers({ Authorization: `Bearer ${token}` }),
-  })
-    .then((res) => res.json())
-    .then((result) =>
-      dispatch(setName([result.body.firstName, result.body.lastName]))
-    );
 
   /* Hook useRef() : allows to keep the value between the renderings */
   const inputFirstName = useRef();

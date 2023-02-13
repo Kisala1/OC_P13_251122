@@ -1,0 +1,21 @@
+.account {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    background-color: #fff;
+    width: 80%;
+    margin: 0 auto;
+    flex-direction: row;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    text-align: left;
+    margin-bottom: 2rem;
+
+    .contentButton {
+        width: 200px;
+        padding: 8px;
+        font-size: 1.1rem;
+        margin-top: 1rem;
+    }
+}

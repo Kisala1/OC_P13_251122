@@ -27,8 +27,8 @@ export function InputsSignIn() {
 
     fetch('http://localhost:3001/api/v1/user/login', {
       method: 'POST',
-      body: data,
       headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: data,
     })
       .then((res) => res.json())
       .then((result) => {
