@@ -12,10 +12,26 @@
     text-align: left;
     margin-bottom: 2rem;
 
+    .accountContentWrapper {
+        width: 100%;
+        flex: 1;
+    }
+
     .contentButton {
         width: 200px;
         padding: 8px;
         font-size: 1.1rem;
         margin-top: 1rem;
+    }
+}
+
+@media (max-width: 720px) {
+    .account {
+        flex-direction: column;
+
+        .cta {
+            width: 100%;
+            flex: 1;
+        }
     }
 }

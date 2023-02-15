@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import styles from './InputsSignIn.module.scss';
+import styles from './Login.module.scss';
 
 /**
  *
@@ -10,7 +10,7 @@ import styles from './InputsSignIn.module.scss';
 
 // source : https://contactmentor.com/login-form-react-js-code/
 
-export function InputsSignIn() {
+export function Login() {
   // React States
   const [errorMessages, setErrorMessages] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);

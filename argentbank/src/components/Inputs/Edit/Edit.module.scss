@@ -1,0 +1,12 @@
+.input {
+    padding: 10px;
+    font-weight: bold;
+
+    &[type=text] {
+        font-size: larger;
+    }
+
+    &::placeholder {
+        color: rgba($color: #000000, $alpha: 0.5);
+    }
+}

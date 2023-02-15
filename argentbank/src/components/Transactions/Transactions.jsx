@@ -33,8 +33,8 @@ export function Transactions() {
               description={el.description}
             />
           </div>
-          <div>
-            <Button className={styles.cta}>
+          <div className={styles.cta}>
+            <Button>
               <strong className={styles.contentButton}>
                 View transactions
               </strong>

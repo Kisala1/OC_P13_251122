@@ -1,7 +1,7 @@
 import { MainLayout } from '../components/MainLayout/MainLayout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { InputsSignIn } from '../components/InputsSignIn/InputsSignIn';
+import { Login } from '../components/Inputs/Login/Login';
 import styles from '../sass/Sign-In.module.scss';
 import styled from 'styled-components';
 
@@ -23,7 +23,7 @@ export function SignIn() {
         <section className={styles.signInContent}>
           <FontAwesomeIcon icon={faUserCircle} className={styles.signInIcon} />
           <h1>Sign In</h1>
-          <InputsSignIn />
+          <Login />
         </section>
       </MainBackground>
     </MainLayout>

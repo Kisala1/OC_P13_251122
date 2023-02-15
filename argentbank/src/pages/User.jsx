@@ -1,11 +1,12 @@
 import { MainLayout } from '../components/MainLayout/MainLayout';
-import { Button } from '../components/Buttons/Button';
+import { Transactions } from '../components/Transactions/Transactions';
 import styles from '../sass/User.module.scss';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setName, editName } from '../feature/nameReducer';
+import { Edit } from '../components/Inputs/Edit/Edit';
 
 const MainBackground = styled.div`
   background-color: #12002b;
@@ -51,6 +52,17 @@ export function User() {
   const inputFirstName = useRef();
   const inputLastName = useRef();
 
+  const inputs = [
+    {
+      ref: inputFirstName,
+      placeholder: firstName,
+    },
+    {
+      ref: inputLastName,
+      placeholder: lastName,
+    },
+  ];
+
   const handleEdit = () => {
     setOpen(!isOpen);
 
@@ -82,20 +94,13 @@ export function User() {
             <div className={styles.containerEdit}>
               <h1>Welcome back</h1>
               <div className={styles.containerInput}>
-                <input
-                  /* ref allows access to this element in the DOM */
-                  ref={inputFirstName}
-                  type="text"
-                  className={styles.input}
-                  placeholder={firstName}
-                />
-                <input
-                  /* ref allows access to this element in the DOM */
-                  ref={inputLastName}
-                  type="text"
-                  className={styles.input}
-                  placeholder={lastName}
-                />
+                {inputs.map((input, index) => (
+                  <Edit
+                    key={index}
+                    inputRef={input.ref}
+                    name={input.placeholder}
+                  />
+                ))}
               </div>
               <div className={styles.containerButtons}>
                 <button className={styles.button} onClick={() => handleEdit()}>
@@ -130,52 +135,7 @@ export function User() {
           )}
         </div>
         <h2 className={styles.srOnly}>Accounts</h2>
-        <section className={styles.account}>
-          <div className={styles.accountContentWrapper}>
-            <h3 className={styles.accountTitle}>
-              Argent Bank Checking (x8349)
-            </h3>
-            <p className={styles.accountAmount}>$2,082.79</p>
-            <p className={styles.accountAmountDescription}>Available Balance</p>
-          </div>
-          <div className={styles.cta}>
-            <Button>
-              <strong className={styles.contentButton}>
-                View transactions
-              </strong>
-            </Button>
-          </div>
-        </section>
-        <section className={styles.account}>
-          <div className={styles.accountContentWrapper}>
-            <h3 className={styles.accountTitle}>Argent Bank Savings (x6712)</h3>
-            <p className={styles.accountAmount}>$10,928.42</p>
-            <p className={styles.accountAmountDescription}>Available Balance</p>
-          </div>
-          <div className={styles.cta}>
-            <Button className={styles.transactionButton}>
-              <strong className={styles.contentButton}>
-                View transactions
-              </strong>
-            </Button>
-          </div>
-        </section>
-        <section className={styles.account}>
-          <div className={styles.accountContentWrapper}>
-            <h3 className={styles.accountTitle}>
-              Argent Bank Credit Card (x8349)
-            </h3>
-            <p className={styles.accountAmount}>$184.30</p>
-            <p className={styles.accountAmountDescription}>Current Balance</p>
-          </div>
-          <div className={styles.cta}>
-            <Button className={styles.transactionButton}>
-              <strong className={styles.contentButton}>
-                View transactions
-              </strong>
-            </Button>
-          </div>
-        </section>
+        <Transactions />
       </MainBackground>
     </MainLayout>
   );
