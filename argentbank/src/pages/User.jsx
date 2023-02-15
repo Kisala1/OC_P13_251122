@@ -1,12 +1,11 @@
 import { MainLayout } from '../components/MainLayout/MainLayout';
 import { Transactions } from '../components/Transactions/Transactions';
+import { Edit } from '../components/Inputs/Edit/Edit';
 import styles from '../sass/User.module.scss';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setName, editName } from '../feature/nameReducer';
-import { Edit } from '../components/Inputs/Edit/Edit';
+import { editName } from '../feature/nameReducer';
 
 const MainBackground = styled.div`
   background-color: #12002b;
@@ -19,7 +18,6 @@ const MainBackground = styled.div`
 
 export function User() {
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
 
   const [isOpen, setOpen] = useState(false);
 
@@ -31,22 +29,6 @@ export function User() {
   );
   const firstName = useSelector((state) => state.user.firstName);
   const lastName = useSelector((state) => state.user.lastName);
-
-  useEffect(() => {
-    /* If not the right token, redirects to /signIn */
-    if (!token) {
-      navigate('/signIn');
-    }
-    /* retrieves the data from the request and dispatches the data to setName */
-    fetch('http://localhost:3001/api/v1/user/profile', {
-      method: 'POST',
-      headers: new Headers({ Authorization: `Bearer ${token}` }),
-    })
-      .then((res) => res.json())
-      .then((result) =>
-        dispatch(setName([result.body.firstName, result.body.lastName]))
-      );
-  }, []);
 
   /* Hook useRef() : allows to keep the value between the renderings */
   const inputFirstName = useRef();
@@ -87,7 +69,7 @@ export function User() {
   };
 
   return (
-    <MainLayout loggedIn={true} firstName={firstName}>
+    <MainLayout loggedIn={true}>
       <MainBackground>
         <div className={styles.header}>
           {isOpen ? (
